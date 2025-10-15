@@ -34,15 +34,17 @@ def buscar_clima(cidade, pais, api_key):
     except requests.exceptions.RequestException:
         return None
 
+
 lista_cidades = list(DADOS_CIDADES.keys())
 
 with st.sidebar:
     st.title("Consulta de Clima 🌦️")
     cidade_selecionada = st.selectbox("Selecione a cidade: ", lista_cidades)
-    st.text(DADOS_CIDADES[cidade_selecionada]["descricao"])
-    st.image(DADOS_CIDADES[cidade_selecionada]["imagem"])
+    info_cidade = DADOS_CIDADES[cidade_selecionada]
+    st.text(info_cidade["descricao"])
+    st.image(info_cidade["imagem"])
 
-clima = buscar_clima(cidade_selecionada, DADOS_CIDADES[cidade_selecionada]["pais_codigo"], API_KEY)
+clima = buscar_clima(cidade_selecionada, info_cidade["pais_codigo"], API_KEY)
 
 st.title(f"{cidade_selecionada}")
 with st.container(border=True): 
@@ -50,20 +52,20 @@ with st.container(border=True):
     col1, col2 = st.columns([1,2])
 
     with col1: 
-        st.image(weather_icon, width=150)
-        st.metric(label="Temperatura: ", value=f"{clima_temp:.0f} ºC")
-        st.image(country_icon)
+        st.image(clima["clima_icon"], width=150)
+        st.metric(label="Temperatura: ", value=f"{clima["temp"]:.0f} ºC")
+        st.image(clima["country_icon"])
 
     with col2: 
         st.header("Descrição: ")
-        st.subheader(clima_descricao)
+        st.subheader(clima["descricao"].upper())
         st.divider()
 
         sub_col1, sub_col2 = st.columns(2)
         with sub_col1:
-            st.metric(label="Sensação: ", value=f"{clima_sensacao:.0f} ºC")
-            st.metric(label="Mínima: ", value=f"{clima_min:.0f} ºC")
+            st.metric(label="Sensação: ", value=f"{clima["sensacao"]:.0f} ºC")
+            st.metric(label="Mínima: ", value=f"{clima["min"]:.0f} ºC")
             
         with sub_col2:
-            st.metric(label="Umidade: ", value=f"{clima_umidade:.0f}")
-            st.metric(label="Máxima: ", value=f"{clima_max:.0f} ºC")
+            st.metric(label="Umidade: ", value=f"{clima["umidade"]:.0f}")
+            st.metric(label="Máxima: ", value=f"{clima["max"]:.0f} ºC")
