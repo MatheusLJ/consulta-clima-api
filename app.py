@@ -2,6 +2,12 @@ import requests
 import streamlit as st
 from dados import DADOS_CIDADES
 
+st.set_page_config(
+    page_title = "Consulta de Clima",
+    page_icon = "🌦️",
+    layout = "centered"
+)
+
 try:
     API_KEY = st.secrets["OPENWEATHER_KEY"]
 except FileNotFoundError:
