@@ -2,12 +2,6 @@
 
 Um aplicativo web desenvolvido em Python e Streamlit que fornece informações meteorológicas em tempo real para diversas capitais e cidades globais. Além dos dados do clima, o dashboard exibe informações e imagens de cada localidade selecionada.
 
-## 📸 Demonstração
-
-![Demonstração do Aplicativo Clima Urbano](assets/screenshot.png) 
-*(Lembre-se de substituir o caminho acima pelo caminho real do seu screenshot/GIF)*
-
----
 
 ## ✨ Funcionalidades
 
