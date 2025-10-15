@@ -2,31 +2,49 @@ import requests
 import streamlit as st
 from dados import DADOS_CIDADES
 
-api_key = "d5bd4956fa21383aaa7f6ccd99698533"
-units = "metric"
+try:
+    API_KEY = st.secrets["OPENWEATHER_KEY"]
+except FileNotFoundError:
+    st.error("Arquivo não encontrado.")
+    st.stop()
+
+def buscar_clima(cidade, pais, api_key):
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={cidade},{DADOS_CIDADES[cidade]["pais_codigo"]}&appid={api_key}&units=metric&lang=pt_br"
+
+    try:
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            data = response.json()
+
+            clima_info = {
+                "cidade": data["name"],
+                "descricao":data["weather"][0]["description"],
+                "clima_icon": f"https://openweathermap.org/img/wn/{data['weather'][0]['icon']}@2x.png",
+                "country_icon": f"https://flagcdn.com/w160/{data['sys']['country'].lower()}.png",
+                "temp": data["main"]["temp"],
+                "sensacao": data["main"]["feels_like"],
+                "umidade": data["main"]["humidity"],
+                "min": data["main"]["temp_min"],
+                "max": data["main"]["temp_max"]
+            }
+            return clima_info
+        else:
+            return None
+    except requests.exceptions.RequestException:
+        return None
+
 lista_cidades = list(DADOS_CIDADES.keys())
 
 with st.sidebar:
-    st.title("Consulta de Clima")
-    cidade = st.selectbox("Selecione a cidade: ", lista_cidades)
-    st.text(DADOS_CIDADES[cidade]["descricao"])
-    st.image(DADOS_CIDADES[cidade]["imagem"])
+    st.title("Consulta de Clima 🌦️")
+    cidade_selecionada = st.selectbox("Selecione a cidade: ", lista_cidades)
+    st.text(DADOS_CIDADES[cidade_selecionada]["descricao"])
+    st.image(DADOS_CIDADES[cidade_selecionada]["imagem"])
 
-url = f"http://api.openweathermap.org/data/2.5/weather?q={cidade},{DADOS_CIDADES[cidade]["pais_codigo"]}&appid={api_key}&units={units}&lang=pt_br"
-data = requests.get(url).json()
+clima = buscar_clima(cidade_selecionada, DADOS_CIDADES[cidade_selecionada]["pais_codigo"], API_KEY)
 
-weather_icon = f"https://openweathermap.org/img/wn/{data['weather'][0]['icon']}@2x.png"
-country_icon = f"https://flagcdn.com/w160/{data['sys']['country'].lower()}.png"
-
-clima = data['weather'][0]['main']
-clima_descricao = data['weather'][0]['description'].upper()
-clima_temp = data['main']['temp']
-clima_sensacao = data['main']['feels_like']
-clima_umidade = data['main']['humidity']
-clima_min = data['main']['temp_min']
-clima_max = data['main']['temp_max']
-
-st.title(f"{cidade}")
+st.title(f"{cidade_selecionada}")
 with st.container(border=True): 
 
     col1, col2 = st.columns([1,2])
