@@ -15,7 +15,7 @@ except FileNotFoundError:
     st.stop()
 
 def buscar_clima(cidade, pais, api_key):
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={cidade},{DADOS_CIDADES[cidade]["pais_codigo"]}&appid={api_key}&units=metric&lang=pt_br"
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={cidade},{pais}&appid={api_key}&units=metric&lang=pt_br"
 
     try:
         response = requests.get(url)
@@ -39,7 +39,6 @@ def buscar_clima(cidade, pais, api_key):
             return None
     except requests.exceptions.RequestException:
         return None
-
 
 lista_cidades = list(DADOS_CIDADES.keys())
 
