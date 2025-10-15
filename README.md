@@ -39,12 +39,12 @@ Siga os passos abaixo para rodar a aplicação em seu ambiente local.
 
 1.  **Clone este repositório:**
     ```bash
-    git clone [https://github.com/](https://github.com/)[SEU_USUARIO]/[SEU_REPOSITORIO].git
+    git clone https://github.com/MatheusLJ/consulta-clima-api.git
     ```
 
 2.  **Navegue até o diretório do projeto:**
     ```bash
-    cd [NOME_DO_REPOSITORIO]
+    cd consulta-clima-api
     ```
 
 3.  **Crie e ative um ambiente virtual:**
@@ -83,5 +83,5 @@ O aplicativo deverá abrir automaticamente no seu navegador padrão.
 
 
 
-* **GitHub:** [@[SEU_USUARIO]](https://github.com/[SEU_USUARIO])
-* **LinkedIn:** [Seu Nome](https://linkedin.com/in/[SEU_LINKEDIN])
+* **GitHub:** [@MatheusLJ](https://github.com/MatheusLJ)
+* **LinkedIn:** Matheus Jesus(https://linkedin.com/in/matheus-leite-jesus-51a283277)
